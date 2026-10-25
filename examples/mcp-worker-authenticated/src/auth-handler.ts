@@ -88,7 +88,13 @@ app.get("/authorize", async (c) => {
 });
 
 app.post("/authorize", async (c) => {
-  if (c.req.header("Origin") !== ORIGIN) return c.text("Asal permintaan tidak valid.", 403);
+  //if (c.req.header("Origin") !== ORIGIN) return c.text("Asal permintaan tidak valid.", 403);
+  if (c.req.header("Origin") !== ORIGIN) {
+  return c.text(
+    `Asal permintaan tidak valid. Diterima: ${c.req.header("Origin") || "(kosong)"}. Diharapkan: ${ORIGIN}`,
+    403
+  );
+}
   const form = await c.req.formData();
   const tx = form.get("tx");
   const csrf = form.get("csrf");
