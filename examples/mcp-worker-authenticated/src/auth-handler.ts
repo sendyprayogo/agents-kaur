@@ -51,8 +51,9 @@ app.use("*", async (c, next) => {
   //c.header("Referrer-Policy", "no-referrer");
   c.header("Referrer-Policy", "same-origin");
   c.header("X-Content-Type-Options", "nosniff");
-  c.header("Content-Security-Policy", "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'");
-  await next();
+  // c.header("Content-Security-Policy", "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'");
+  // await next();
+  c.header("Content-Security-Policy", "default-src 'none'; style-src 'unsafe-inline'; form-action 'self' https://github.com; frame-ancestors 'none'; base-uri 'none'");
 });
 app.use("/authorize", bodyLimit({ maxSize: 8192 }));
 app.use("*", async (c, next) => {
