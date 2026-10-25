@@ -48,7 +48,8 @@ async function readPending(env: Env, key: string, request: Request): Promise<Pen
 
 app.use("*", async (c, next) => {
   c.header("Cache-Control", "no-store");
-  c.header("Referrer-Policy", "no-referrer");
+  //c.header("Referrer-Policy", "no-referrer");
+  c.header("Referrer-Policy", "same-origin");
   c.header("X-Content-Type-Options", "nosniff");
   c.header("Content-Security-Policy", "default-src 'none'; style-src 'unsafe-inline'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'");
   await next();
