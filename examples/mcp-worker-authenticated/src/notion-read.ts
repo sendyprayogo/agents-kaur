@@ -1,7 +1,8 @@
 // Kaur workspace only. No create/update/delete endpoints are exposed.
 export const KAUR_WORKSPACE_ID = "0c473eb3-b036-8155-b5dc-0003190f498c";
 export const KAUR_BOT_ID = "40473eb3-b036-81c7-aa96-002712d87e6b";
-export const TASKS_SOURCE_ID = "40473eb3-0362-8243-a082-879ae0fc3738";
+// export const TASKS_SOURCE_ID = "40473eb3-0362-8243-a082-879ae0fc3738";
+export const TASKS_SOURCE_ID = "40473eb3-b036-8243-a082-879ae0fc3738";
 export const TASKS_DATABASE_ID = "47873eb3-b036-82c1-932c-016249a55628";
 type Identity = { userId?: unknown; username?: unknown };
 type Json = Record<string, any>;
