@@ -20,7 +20,7 @@ function size(value: number) {
 
 export class NotionKaurRead {
   constructor(private token: string | undefined, private identity: Identity | undefined,
-    private http: typeof fetch = fetch) {}
+    private http: typeof fetch = fetch.bind(globalThis)) {}
 
   private async request(method: "GET" | "POST", path: string, body?: Json): Promise<Json> {
     if (String(this.identity?.userId) !== "18157510" || this.identity?.username !== "sendyprayogo") {
@@ -34,11 +34,14 @@ export class NotionKaurRead {
     let response: Response;
     try {
       response = await this.http(`https://api.notion.com/v1${path}`, {
-        method, redirect: "error", signal: AbortSignal.timeout(20000),
+        method, redirect: "manual", signal: AbortSignal.timeout(20000),
         headers: { Authorization: `Bearer ${this.token}`, "Notion-Version": "2026-03-11", "Content-Type": "application/json" },
         ...(body ? { body: JSON.stringify(body) } : {})
       });
     } catch { throw new Error("Koneksi API Notion gagal atau melewati 20 detik. Coba kembali."); }
+    if (response.status >= 300 && response.status < 400) {
+      throw new Error("API Notion mengembalikan pengalihan. Permintaan dihentikan agar token tidak diteruskan ke alamat lain.");
+    }
     let data: Json;
     try { data = await response.json() as Json; }
     catch { throw new Error(`Respons Notion bukan JSON (HTTP ${response.status}).`); }
@@ -113,4 +116,3 @@ export class NotionKaurRead {
     });
   }
 }
-
